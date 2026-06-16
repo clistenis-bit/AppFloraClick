@@ -5,13 +5,5 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Remove="Components\Pages\Catalogo.razor.css" />
-    <Content Include="Components\Pages\Catalogo.razor.css" />
-    <None Remove="Components\Pages\Home.css" />
-    <None Remove="Components\Pages\StyleSheet.css" />
-    <Content Include="Components\Pages\TelaIniLog.razor.css" />
-  </ItemGroup>
-
+  
 </Project>
