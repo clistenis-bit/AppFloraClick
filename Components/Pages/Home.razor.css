@@ -1,0 +1,91 @@
+﻿.pagina-inicial {
+    position: relative;
+    min-height: 100vh;
+    background-image: linear-gradient(rgba(50,55,35,.55), rgba(50,55,35,.55)), url("https://images.unsplash.com/photo-1468327768560-75b778cbb551");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+}
+
+.painel-central {
+    width: 900px;
+    max-width: 90%;
+    padding: 60px;
+    backdrop-filter: blur(8px);
+    background: rgba(105,115,79,.70);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    z-index: 2;
+    text-align: center;
+}
+
+.logo-area h1 {
+    font-size: 80px;
+    color: #ffd8e4;
+    font-family: "Brush Script MT", cursive;
+    margin: 0;
+}
+
+.logo-area p {
+    color: #e6c06f;
+    letter-spacing: 6px;
+    margin-top: -10px;
+    font-size: 20px;
+}
+
+.texto-area {
+    margin-top: 40px;
+}
+
+    .texto-area h2 {
+        color: white;
+        font-size: 42px;
+        margin-bottom: 20px;
+    }
+
+    .texto-area span {
+        color: #f0f0f0;
+        font-size: 20px;
+    }
+
+.botoes {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+}
+
+.btn-login,
+.btn-cadastro {
+    width: 220px;
+    padding: 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    text-align: center;
+    font-size: 18px;
+    transition: .3s;
+}
+
+.btn-login {
+    background: #707b50;
+    color: white;
+}
+
+.btn-cadastro {
+    border: 2px solid white;
+    color: white;
+}
+
+    .btn-login:hover,
+    .btn-cadastro:hover {
+        transform: translateY(-3px);
+    }

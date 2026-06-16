@@ -1,0 +1,50 @@
+﻿@page "/login"
+@inject NavigationManager Navigation
+
+<PageTitle>Login</PageTitle>
+
+<div class="login-container">
+
+    <div class="login-card">
+
+        <h1>Flora Click</h1>
+
+        <input @bind="Usuario"
+               placeholder="Usuário" />
+
+        <input @bind="Senha"
+               type="password"
+               placeholder="Senha" />
+
+        <button @onclick="Entrar">
+            ENTRAR
+        </button>
+
+        <p class="mensagem">
+            @Mensagem
+        </p>
+
+    </div>
+
+</div>
+
+@code {
+
+    private string Usuario = "";
+    private string Senha = "";
+    private string Mensagem = "";
+
+    private void Entrar()
+    {
+        if (Usuario == "floraclick" &&
+            Senha == "floraclick")
+        {
+            Navigation.NavigateTo("/catalogo");
+        }
+        else
+        {
+            Mensagem = "Usuário ou senha inválidos.";
+        }
+    }
+
+}
