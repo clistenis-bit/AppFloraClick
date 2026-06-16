@@ -7,29 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< Updated upstream
     <None Remove="Components\Pages\Catalogo.razor.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Components\Pages\Catalogo.razor.css" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\Imagens\Buqueflorrosa.png" />
-=======
-    <Content Remove="Components\Pages\Home.razor.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Components\Pages\Home.css" />
     <None Remove="Components\Pages\StyleSheet.css" />
-    <None Remove="Components\Pages\TelaIniLog.razor.css" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Components\Pages\TelaIniLog.razor.css" />
->>>>>>> Stashed changes
   </ItemGroup>
 
 </Project>
