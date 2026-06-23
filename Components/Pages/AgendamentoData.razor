@@ -1,0 +1,157 @@
+﻿@page "/agendamento-data"
+
+<PageTitle>Agendamento de Datas Especiais</PageTitle>
+
+<div class="pagina-agendamento">
+
+    <div class="overlay"></div>
+
+    <div class="painel-central">
+
+        <div class="topo">
+            <h1>Flora Click</h1>
+            <p>AGENDAMENTO DE DATAS ESPECIAIS</p>
+        </div>
+
+        <div class="texto-topo">
+            <h2>Nunca esqueça um momento importante</h2>
+
+            <span>
+                Cadastre aniversários, datas comemorativas e ocasiões especiais
+                para receber lembretes e ofertas exclusivas.
+            </span>
+        </div>
+
+        <div class="formulario">
+
+            <div class="campo">
+                <label>Nome do Cliente</label>
+                <input @bind="nomeCliente" placeholder="Digite o nome" />
+            </div>
+
+            <div class="campo">
+                <label>Telefone</label>
+                <input @bind="telefone" placeholder="(69) 99999-9999" />
+            </div>
+
+            <div class="campo">
+                <label>Tipo da Data</label>
+                <select @bind="tipoData">
+                    <option value="">Selecione</option>
+                    <option>Aniversário</option>
+                    <option>Dia das Mães</option>
+                    <option>Dia dos Namorados</option>
+                    <option>Dia dos Pais</option>
+                    <option>Data Personalizada</option>
+                </select>
+            </div>
+
+            <div class="campo">
+                <label>Data</label>
+                <input type="date" @bind="dataEspecial" />
+            </div>
+
+        </div>
+
+        <div class="campo">
+            <label>Observação</label>
+            <textarea @bind="observacao"
+                      placeholder="Ex.: Enviar promoção de buquê de rosas"></textarea>
+        </div>
+
+        <div class="botoes">
+
+            <button class="btn-cadastrar"
+                    @onclick="Cadastrar">
+                 Cadastrar Data
+            </button>
+
+        </div>
+
+        <div class="linha"></div>
+
+        <h3>Datas Cadastradas</h3>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Telefone</th>
+                    <th>Tipo</th>
+                    <th>Data</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in agendamentos)
+                {
+                    <tr>
+                        <td>@item.NomeCliente</td>
+                        <td>@item.Telefone</td>
+                        <td>@item.TipoData</td>
+                        <td>@item.DataEspecial.ToString("dd/MM/yyyy")</td>
+
+                        <td>
+                            <button class="btn-excluir"
+                                    @onclick="() => Excluir(item)">
+                                Excluir
+                            </button>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+@code {
+
+    private string nomeCliente = "";
+    private string telefone = "";
+    private string tipoData = "";
+    private string observacao = "";
+
+    private DateTime dataEspecial = DateTime.Today;
+
+    private List<Agendamento> agendamentos = new();
+
+    private void Cadastrar()
+    {
+        agendamentos.Add(new Agendamento
+            {
+                NomeCliente = nomeCliente,
+                Telefone = telefone,
+                TipoData = tipoData,
+                Observacao = observacao,
+                DataEspecial = dataEspecial
+            });
+
+        nomeCliente = "";
+        telefone = "";
+        tipoData = "";
+        observacao = "";
+        dataEspecial = DateTime.Today;
+    }
+
+    private void Excluir(Agendamento item)
+    {
+        agendamentos.Remove(item);
+    }
+
+    public class Agendamento
+    {
+        public string NomeCliente { get; set; } = "";
+        public string Telefone { get; set; } = "";
+        public string TipoData { get; set; } = "";
+        public string Observacao { get; set; } = "";
+        public DateTime DataEspecial { get; set; }
+    }
+
+}
