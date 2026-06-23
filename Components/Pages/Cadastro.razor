@@ -1,64 +1,56 @@
 ﻿@page "/cadastro"
 
-<PageTitle>Cadastro de Cliente - FloraClick</PageTitle>
+<PageTitle>Cadastro de Cliente</PageTitle>
 
-<link href="css/FloraClick.css" rel="stylesheet" />
+<div class="pagina-cadastro">
 
-<section class="pagina-cadastro">
+    <div class="overlay"></div>
 
     <div class="card-cadastro">
 
-        <h1 class="titulo-cadastro">
-            FloraClick
-        </h1>
+        <div class="titulo-cadastro">
+            <h1>Flora Click</h1>
+            <p>CADASTRO DE CLIENTE</p>
+        </div>
 
-        <p class="subtitulo-cadastro">
-            Cadastro de Cliente
-        </p>
-
-        <div class="campo">
+        <div class="grupo">
             <label>Nome Completo</label>
             <input type="text" placeholder="Digite seu nome completo" />
         </div>
 
-        <div class="campo">
-            <label>CPF</label>
-            <input type="text" placeholder="Digite seu CPF" />
-        </div>
-
-        <div class="campo">
-            <label>Telefone</label>
-            <input type="text" placeholder="Digite seu telefone" />
-        </div>
-
-        <div class="campo">
+        <div class="grupo">
             <label>E-mail</label>
             <input type="email" placeholder="Digite seu e-mail" />
         </div>
 
-        <div class="campo">
-            <label>Endereço</label>
-            <input type="text" placeholder="Digite seu endereço" />
+        <div class="grupo">
+            <label>Telefone</label>
+            <input type="text" placeholder="(00) 00000-0000" />
         </div>
 
-        <div class="campo">
-            <label>Cidade</label>
-            <input type="text" placeholder="Digite sua cidade" />
+        <div class="linha">
+
+            <div class="grupo">
+                <label>CPF</label>
+                <input type="text" placeholder="000.000.000-00" />
+            </div>
+
+            <div class="grupo">
+                <label>Data de Nascimento</label>
+                <input type="date" />
+            </div>
+
         </div>
 
-        <div class="campo">
-            <label>Data de Nascimento</label>
-            <input type="date" />
+        <div class="grupo">
+            <label>Senha</label>
+            <input type="password" placeholder="Crie uma senha" />
         </div>
 
-        <button class="botao-cadastrar">
-            Cadastrar Cliente
+        <button class="btn-salvar">
+            SALVAR CADASTRO
         </button>
-
-        <a href="/" class="botao-voltar">
-            Voltar para Home
-        </a>
 
     </div>
 
-</section>
+</div>

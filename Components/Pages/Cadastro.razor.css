@@ -1,75 +1,91 @@
-﻿body {
-    body {
-        background-image: url('https://images.unsplash.com/photo-1468327768560-75b778cbb551');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        font-family: Arial, sans-serif;
-    }
-}
-
-.pagina-cadastro {
+﻿.pagina-cadastro {
+    position: relative;
+    min-height: 100vh;
+    background-image: linear-gradient(rgba(50,55,35,.55), rgba(50,55,35,.55)), url("https://images.unsplash.com/photo-1468327768560-75b778cbb551");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     justify-content: center;
-    padding: 40px;
+    align-items: center;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
 }
 
 .card-cadastro {
-    background: white;
-    width: 600px;
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    width: 700px;
+    max-width: 90%;
+    padding: 50px;
+    backdrop-filter: blur(8px);
+    background: rgba(105,115,79,.70);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.3);
+    z-index: 2;
+    color: white;
 }
 
 .titulo-cadastro {
     text-align: center;
-    color: #2e8b57;
+    margin-bottom: 30px;
 }
 
-.subtitulo-cadastro {
-    text-align: center;
-    margin-bottom: 25px;
-    color: #666;
-}
+    .titulo-cadastro h1 {
+        font-family: "Brush Script MT", cursive;
+        font-size: 60px;
+        color: #ffd8e4;
+        margin: 0;
+    }
 
-.campo {
+    .titulo-cadastro p {
+        color: #e6c06f;
+        letter-spacing: 4px;
+    }
+
+.grupo {
     display: flex;
     flex-direction: column;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
 }
 
-    .campo label {
-        margin-bottom: 5px;
-        font-weight: bold;
+    .grupo label {
+        margin-bottom: 6px;
+        font-size: 16px;
     }
 
-    .campo input,
-    .campo select {
-        padding: 10px;
-        border: 1px solid #ccc;
+    .grupo input {
+        padding: 12px;
         border-radius: 10px;
+        border: none;
+        outline: none;
+        font-size: 16px;
     }
 
-.botao-cadastrar {
+.linha {
+    display: flex;
+    gap: 15px;
+}
+
+    .linha .grupo {
+        flex: 1;
+    }
+
+.btn-salvar {
     width: 100%;
-    padding: 12px;
-    background: #2e8b57;
-    color: white;
+    margin-top: 20px;
+    padding: 14px;
+    border-radius: 12px;
     border: none;
-    border-radius: 10px;
+    background: #707b50;
+    color: white;
+    font-size: 18px;
     cursor: pointer;
-    margin-top: 15px;
+    transition: .3s;
 }
 
-    .botao-cadastrar:hover {
-        background: #246b45;
+    .btn-salvar:hover {
+        transform: translateY(-3px);
     }
-
-.botao-voltar {
-    display: block;
-    text-align: center;
-    margin-top: 15px;
-    text-decoration: none;
-    color: #2e8b57;
-}
