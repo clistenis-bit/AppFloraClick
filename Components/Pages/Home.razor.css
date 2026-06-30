@@ -1,4 +1,4 @@
-﻿.pagina-inicial {
+﻿.pagina-home {
     position: relative;
     min-height: 100vh;
     background-image: linear-gradient(rgba(50,55,35,.55), rgba(50,55,35,.55)), url("https://images.unsplash.com/photo-1468327768560-75b778cbb551");
@@ -15,77 +15,62 @@
     inset: 0;
 }
 
-.painel-central {
-    width: 900px;
+.card-home {
+    width: 700px;
     max-width: 90%;
-    padding: 60px;
+    padding: 50px;
     backdrop-filter: blur(8px);
     background: rgba(105,115,79,.70);
     border: 1px solid rgba(255,255,255,.2);
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(0,0,0,.3);
     z-index: 2;
+    color: white;
     text-align: center;
 }
 
-.logo-area h1 {
-    font-size: 80px;
-    color: #ffd8e4;
+.titulo-home h1 {
     font-family: "Brush Script MT", cursive;
+    font-size: 60px;
+    color: #ffd8e4;
     margin: 0;
 }
 
-.logo-area p {
+.titulo-home p {
     color: #e6c06f;
-    letter-spacing: 6px;
-    margin-top: -10px;
-    font-size: 20px;
+    letter-spacing: 4px;
+    margin-bottom: 35px;
 }
 
-.texto-area {
-    margin-top: 40px;
+.conteudo-home h2 {
+    margin-bottom: 10px;
+    font-size: 30px;
 }
 
-    .texto-area h2 {
-        color: white;
-        font-size: 42px;
-        margin-bottom: 20px;
-    }
+.conteudo-home p {
+    margin-bottom: 30px;
+    font-size: 17px;
+}
 
-    .texto-area span {
-        color: #f0f0f0;
-        font-size: 20px;
-    }
-
-.botoes {
-    margin-top: 50px;
+.menu-home {
     display: flex;
-    justify-content: center;
-    gap: 25px;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.btn-login,
-.btn-cadastro {
-    width: 220px;
-    padding: 16px;
+.btn-home {
+    display: block;
+    padding: 15px;
     border-radius: 12px;
+    background: #707b50;
+    color: white;
     text-decoration: none;
-    text-align: center;
     font-size: 18px;
+    font-weight: bold;
     transition: .3s;
 }
 
-.btn-login {
-    background: #707b50;
-    color: white;
-}
-
-.btn-cadastro {
-    border: 2px solid white;
-    color: white;
-}
-
-    .btn-login:hover,
-    .btn-cadastro:hover {
+    .btn-home:hover {
         transform: translateY(-3px);
+        background: #5d6842;
     }
