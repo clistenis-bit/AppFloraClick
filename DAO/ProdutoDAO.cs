@@ -1,6 +1,6 @@
 ﻿namespace AppFloraClick.DAO
 {
-    public class CadastroProdutoDAO
+    public class ProdutoDAO
     {
     }
 }

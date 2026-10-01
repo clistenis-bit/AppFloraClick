@@ -1,6 +1,6 @@
 ﻿namespace AppFloraClick.Models
 {
-    public class AgendamentoData
+    public class Agendamento
     {
     }
 }

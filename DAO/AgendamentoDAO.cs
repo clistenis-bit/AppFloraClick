@@ -1,6 +1,6 @@
 ﻿namespace AppFloraClick.DAO
 {
-    public class AgendamentoDataDAO
+    public class AgendamentoDAO
     {
     }
 }
