@@ -14,7 +14,10 @@ namespace AppFloraClick.DAO
             {
                 conexao.Open();
 
-                string sql = "INSERT INTO Agendamento_data (nome_cli_age, telefone_age, tipo_data_age, data_age, observacao_age) VALUES (@nome, @telefone, @tipo, @data, @observacao)";
+                string sql = @"INSERT INTO Agendamento_data
+                               (nome_cli_age, telefone_age, tipo_data_age, data_age, observacao_age)
+                               VALUES
+                               (@nome, @telefone, @tipo, @data, @observacao)";
 
                 MySqlCommand comando = new MySqlCommand(sql, conexao);
 
