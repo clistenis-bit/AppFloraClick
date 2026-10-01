@@ -1,5 +1,8 @@
+﻿
+  using System;
+ 
 
-    using System;
+  
 
         namespace AppFloraClick.Models
         {
@@ -13,8 +16,6 @@
                 public string observacao_age { get; set; } = "";
             }
         }
+ 
     
-
-
-
 
