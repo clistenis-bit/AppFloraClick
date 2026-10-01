@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 namespace AppFloraClick.DAO
 {
-    public class AgendamentoDAO
+    public class AgendamentoDataDAO
     {
-        public void Inserir(Agendamento agendamento)
+        public void Inserir(AgendamentoData agendamento)
         {
             using (MySqlConnection conexao = Conexao.Conectar())
             {
@@ -28,9 +28,9 @@ namespace AppFloraClick.DAO
             }
         }
 
-        public List<Agendamento> Listar()
+        public List<AgendamentoData> Listar()
         {
-            List<Agendamento> agendamentos = new List<Agendamento>();
+            List<AgendamentoData> agendamentos = new List<AgendamentoData>();
 
             using (MySqlConnection conexao = Conexao.Conectar())
             {
@@ -44,7 +44,7 @@ namespace AppFloraClick.DAO
 
                 while (leitor.Read())
                 {
-                    Agendamento agendamento = new Agendamento();
+                    AgendamentoData agendamento = new AgendamentoData();
 
                     agendamento.id_age = Convert.ToInt32(leitor["id_age"]);
                     agendamento.nome_cli_age = leitor["nome_cli_age"].ToString() ?? "";

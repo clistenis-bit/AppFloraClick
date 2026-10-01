@@ -1,5 +1,4 @@
-﻿
-@page "/agendamento-data"
+﻿@page "/agendamento-data"
 @using AppFloraClick.Models
 @using AppFloraClick.DAO
 
@@ -39,6 +38,7 @@
 
             <div class="campo">
                 <label>Tipo da Data</label>
+
                 <select @bind="tipoData">
                     <option value="">Selecione</option>
                     <option value="Aniversário">Aniversário</option>
@@ -54,12 +54,13 @@
                 <input type="date" @bind="dataEspecial" />
             </div>
 
-        </div>
+            <div class="campo">
+                <label>Observação</label>
 
-        <div class="campo">
-            <label>Observação</label>
-            <textarea @bind="observacao"
-                      placeholder="Ex.: Enviar promoção de buquê de rosas"></textarea>
+                <textarea @bind="observacao"
+                          placeholder="Ex.: Enviar promoção de buquê de rosas"></textarea>
+            </div>
+
         </div>
 
         <div class="botoes">
@@ -96,6 +97,7 @@
                         <td>@item.telefone_age</td>
                         <td>@item.tipo_data_age</td>
                         <td>@item.data_age.ToString("dd/MM/yyyy")</td>
+
                         <td>
                             <button class="btn-excluir"
                                     @onclick="() => Excluir(item)">
@@ -115,11 +117,10 @@
 
 @code {
 
-    private Agendamento agendamento = new Agendamento();
+    private AgendamentoDataDAO dao = new AgendamentoDataDAO();
 
-    private List<Agendamento> agendamentos = new List<Agendamento>();
-
-    private AgendamentoDAO dao = new AgendamentoDAO();
+    private List<AppFloraClick.Models.AgendamentoData> agendamentos =
+        new List<AppFloraClick.Models.AgendamentoData>();
 
     private string nomeCliente = "";
     private string telefone = "";
@@ -135,21 +136,22 @@
 
     private void Cadastrar()
     {
-        agendamento.nome_cli_age = nomeCliente;
-        agendamento.telefone_age = telefone;
-        agendamento.tipo_data_age = tipoData;
-        agendamento.data_age = dataEspecial;
-        agendamento.observacao_age = observacao;
+        AppFloraClick.Models.AgendamentoData novoAgendamento =
+            new AppFloraClick.Models.AgendamentoData();
 
-        dao.Inserir(agendamento);
+        novoAgendamento.nome_cli_age = nomeCliente;
+        novoAgendamento.telefone_age = telefone;
+        novoAgendamento.tipo_data_age = tipoData;
+        novoAgendamento.data_age = dataEspecial;
+        novoAgendamento.observacao_age = observacao;
+
+        dao.Inserir(novoAgendamento);
 
         nomeCliente = "";
         telefone = "";
         tipoData = "";
         observacao = "";
         dataEspecial = DateTime.Today;
-
-        agendamento = new Agendamento();
 
         CarregarAgendamentos();
     }
@@ -159,11 +161,10 @@
         agendamentos = dao.Listar();
     }
 
-    private void Excluir(Agendamento item)
+    private void Excluir(AppFloraClick.Models.AgendamentoData item)
     {
         dao.Excluir(item.id_age);
 
         CarregarAgendamentos();
     }
 }
-
