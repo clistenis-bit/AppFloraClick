@@ -1,5 +1,9 @@
 ﻿namespace AppFloraClick.Models
 {
+<<<<<<< HEAD
+    public class Produto
+    {
+=======
     public class CadastroProduto
     {  
         public class Produto
@@ -11,6 +15,7 @@
             public string descricao_pro { get; set; }
             public int quantidade_pro { get; set; }
         }
+>>>>>>> af8df8294761df01dfb084930662131ae61a3df8
     }
 }
 

@@ -4,7 +4,7 @@ using static AppFloraClick.Models.CadastroProduto;
 
 namespace AppFloraClick.DAO
 {
-    public class CadastroProdutoDAO
+    public class ProdutoDAO
     {
         public class ProdutoDAO
         {

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace AppFloraClick.DAO
 {
-    public class AgendamentoDataDAO
+    public class AgendamentoDAO
     {
         public void Inserir(Agendamento agendamento)
         {
