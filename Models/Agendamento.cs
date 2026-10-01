@@ -1,10 +1,4 @@
-﻿namespace AppFloraClick.Models
-{
-<<<<<<< HEAD
-    public class Agendamento
-    {
-    }
-=======
+
     using System;
 
         namespace AppFloraClick.Models
@@ -20,6 +14,7 @@
             }
         }
     
->>>>>>> af8df8294761df01dfb084930662131ae61a3df8
-}
+
+
+
 

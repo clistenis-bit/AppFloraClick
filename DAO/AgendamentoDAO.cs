@@ -1,7 +1,5 @@
-﻿
-using AppFloraClick.Configs;
+﻿using AppFloraClick.Configs;
 using AppFloraClick.Models;
-using AppFloraClick.Models.AppFloraClick.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
