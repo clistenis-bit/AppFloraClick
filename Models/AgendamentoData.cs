@@ -4,7 +4,7 @@
 
         namespace AppFloraClick.Models
         {
-            public class Agendamento
+            public class AgendamentoData
             {
                 public int id_age { get; set; }
                 public string nome_cli_age { get; set; } = "";
