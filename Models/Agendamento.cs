@@ -2,8 +2,6 @@
   using System;
  
 
-  
-
         namespace AppFloraClick.Models
         {
             public class Agendamento
