@@ -1,14 +1,15 @@
 ﻿using AppFloraClick.Configs;
+using AppFloraClick.Models;
 using MySql.Data.MySqlClient;
-using static AppFloraClick.Models.CadastroProduto;
+using System;
+using System.Collections.Generic;
+using static AppFloraClick.Models.Produto;
 
 namespace AppFloraClick.DAO
 {
-    public class ProdutoDAO
-    {
         public class ProdutoDAO
         {
-            // Cadastra um produto no banco de dados
+      
             public void Inserir(Produto produto)
             {
                 using (MySqlConnection conexao = Conexao.Conectar())
@@ -29,7 +30,6 @@ namespace AppFloraClick.DAO
                 }
             }
 
-            // Lista os produtos cadastrados
             public List<Produto> Listar()
             {
                 List<Produto> produtos = new List<Produto>();
@@ -62,7 +62,6 @@ namespace AppFloraClick.DAO
                 return produtos;
             }
 
-            // Exclui um produto pelo ID
             public void Excluir(int id)
             {
                 using (MySqlConnection conexao = Conexao.Conectar())
@@ -80,5 +79,4 @@ namespace AppFloraClick.DAO
             }
         }
     }
-}
 
