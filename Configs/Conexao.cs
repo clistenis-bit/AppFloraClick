@@ -4,15 +4,11 @@ namespace AppFloraClick.Configs
 {
     public class Conexao
     {
-        
-            public static MySqlConnection Conectar()
-            {
-                string conexao = "server=localhost;database=floraclick_bd;user=root;password=;";
-                return new MySqlConnection(conexao);
-            }
-        
+        public static MySqlConnection Conectar()
+        {
+            string conexao = "Server=localhost;Port=3306;Database=floraclick_bd;User=root;Password=;";
+
+            return new MySqlConnection(conexao);
+        }
     }
-
 }
-
-
