@@ -102,3 +102,51 @@
     font-size: 22px;
     font-weight: bold;
 }
+
+.acoes-catalogo {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+}
+
+    .acoes-catalogo button,
+    .sem-produtos button {
+        border: none;
+        border-radius: 12px;
+        padding: 12px 20px;
+        background: #707b50;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+        .acoes-catalogo button:hover,
+        .sem-produtos button:hover {
+            transform: translateY(-2px);
+            background: #5d6842;
+        }
+
+.card small {
+    display: block;
+    color: #f5d98a;
+    margin-bottom: 8px;
+}
+
+.card span {
+    display: block;
+    color: white;
+    font-size: 14px;
+}
+
+.sem-produtos {
+    max-width: 650px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 22px;
+    text-align: center;
+    background: rgba(255,255,255,.15);
+    color: white;
+}

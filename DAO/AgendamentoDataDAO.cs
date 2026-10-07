@@ -14,53 +14,84 @@ namespace AppFloraClick.DAO
             {
                 conexao.Open();
 
-                string sql = @"INSERT INTO Agendamento_data
-                               (nome_cli_age, telefone_age, tipo_data_age, data_age, observacao_age)
-                               VALUES
-                               (@nome, @telefone, @tipo, @data, @observacao)";
+                string sql = @"
+                    INSERT INTO Agendamento_data
+                    (
+                        nome_cli_age,
+                        telefone_age,
+                        tipo_data_age,
+                        data_age,
+                        observacao_age
+                    )
+                    VALUES
+                    (
+                        @nome,
+                        @telefone,
+                        @tipo,
+                        @data,
+                        @observacao
+                    )
+                ";
 
-                MySqlCommand comando = new MySqlCommand(sql, conexao);
+                using (MySqlCommand comando = new MySqlCommand(sql, conexao))
+                {
+                    comando.Parameters.AddWithValue("@nome", agendamento.nome_cli_age);
+                    comando.Parameters.AddWithValue("@telefone", agendamento.telefone_age);
+                    comando.Parameters.AddWithValue("@tipo", agendamento.tipo_data_age);
+                    comando.Parameters.AddWithValue("@data", agendamento.data_age);
+                    comando.Parameters.AddWithValue("@observacao", agendamento.observacao_age);
 
-                comando.Parameters.AddWithValue("@nome", agendamento.nome_cli_age);
-                comando.Parameters.AddWithValue("@telefone", agendamento.telefone_age);
-                comando.Parameters.AddWithValue("@tipo", agendamento.tipo_data_age);
-                comando.Parameters.AddWithValue("@data", agendamento.data_age);
-                comando.Parameters.AddWithValue("@observacao", agendamento.observacao_age);
-
-                comando.ExecuteNonQuery();
+                    comando.ExecuteNonQuery();
+                }
             }
         }
 
         public List<AgendamentoData> Listar()
         {
-            List<AgendamentoData> agendamentos = new List<AgendamentoData>();
+            List<AgendamentoData> lista = new List<AgendamentoData>();
 
             using (MySqlConnection conexao = Conexao.Conectar())
             {
                 conexao.Open();
 
-                string sql = "SELECT * FROM Agendamento_data";
+                string sql = @"
+                    SELECT
+                        id_age,
+                        nome_cli_age,
+                        telefone_age,
+                        tipo_data_age,
+                        data_age,
+                        observacao_age
+                    FROM Agendamento_data
+                    ORDER BY id_age DESC
+                ";
 
-                MySqlCommand comando = new MySqlCommand(sql, conexao);
-
-                MySqlDataReader leitor = comando.ExecuteReader();
-
-                while (leitor.Read())
+                using (MySqlCommand comando = new MySqlCommand(sql, conexao))
+                using (MySqlDataReader leitor = comando.ExecuteReader())
                 {
-                    AgendamentoData agendamento = new AgendamentoData();
+                    while (leitor.Read())
+                    {
+                        AgendamentoData agendamento = new AgendamentoData
+                        {
+                            id_age = Convert.ToInt32(leitor["id_age"]),
+                            nome_cli_age = leitor["nome_cli_age"]?.ToString() ?? "",
+                            telefone_age = leitor["telefone_age"]?.ToString() ?? "",
+                            tipo_data_age = leitor["tipo_data_age"]?.ToString() ?? "",
+                            observacao_age = leitor["observacao_age"]?.ToString() ?? ""
+                        };
 
-                    agendamento.id_age = Convert.ToInt32(leitor["id_age"]);
-                    agendamento.nome_cli_age = leitor["nome_cli_age"].ToString() ?? "";
-                    agendamento.telefone_age = leitor["telefone_age"].ToString() ?? "";
-                    agendamento.tipo_data_age = leitor["tipo_data_age"].ToString() ?? "";
-                    agendamento.data_age = Convert.ToDateTime(leitor["data_age"]);
-                    agendamento.observacao_age = leitor["observacao_age"].ToString() ?? "";
+                        if (leitor["data_age"] != DBNull.Value)
+                        {
+                            agendamento.data_age =
+                                Convert.ToDateTime(leitor["data_age"]);
+                        }
 
-                    agendamentos.Add(agendamento);
+                        lista.Add(agendamento);
+                    }
                 }
             }
 
-            return agendamentos;
+            return lista;
         }
 
         public void Excluir(int id)
@@ -69,13 +100,14 @@ namespace AppFloraClick.DAO
             {
                 conexao.Open();
 
-                string sql = "DELETE FROM Agendamento_data WHERE id_age = @id";
+                string sql =
+                    "DELETE FROM Agendamento_data WHERE id_age = @id";
 
-                MySqlCommand comando = new MySqlCommand(sql, conexao);
-
-                comando.Parameters.AddWithValue("@id", id);
-
-                comando.ExecuteNonQuery();
+                using (MySqlCommand comando = new MySqlCommand(sql, conexao))
+                {
+                    comando.Parameters.AddWithValue("@id", id);
+                    comando.ExecuteNonQuery();
+                }
             }
         }
     }

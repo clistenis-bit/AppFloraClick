@@ -1,7 +1,14 @@
 ﻿@page "/login"
+
+@using AppFloraClick.DAO
+@using AppFloraClick.Models
+@using AppFloraClick.Services
+
+@inject ClienteDAO ClienteDAO
+@inject SessaoUsuario SessaoUsuario
 @inject NavigationManager Navigation
 
-<PageTitle>Login</PageTitle>
+<PageTitle>Login - Flora Click</PageTitle>
 
 <div class="login-container">
 
@@ -9,42 +16,79 @@
 
         <h1>Flora Click</h1>
 
-        <input @bind="Usuario"
-               placeholder="Usuário" />
+        <p>Entre na sua conta</p>
 
-        <input @bind="Senha"
-               type="password"
-               placeholder="Senha" />
+        <input @bind="email"
+               type="email"
+               placeholder="Seu e-mail" />
+
+        <input @bind="cpf"
+               placeholder="Seu CPF" />
 
         <button @onclick="Entrar">
             ENTRAR
         </button>
 
-        <p class="mensagem">
-            @Mensagem
-        </p>
+        @if (!string.IsNullOrWhiteSpace(mensagem))
+        {
+            <p class="mensagem">
+                @mensagem
+            </p>
+        }
+
+        <button class="cadastro"
+                @onclick="CriarConta">
+
+            AINDA NÃO TENHO CONTA
+
+        </button>
 
     </div>
 
 </div>
 
-@code {
+@code
+{
+    private string email = "";
 
-    private string Usuario = "";
-    private string Senha = "";
-    private string Mensagem = "";
+    private string cpf = "";
+
+    private string mensagem = "";
 
     private void Entrar()
     {
-        if (Usuario == "floraclick" &&
-            Senha == "floraclick")
+        mensagem = "";
+
+        if (string.IsNullOrWhiteSpace(email) ||
+            string.IsNullOrWhiteSpace(cpf))
         {
+            mensagem = "Digite seu e-mail e CPF.";
+            return;
+        }
+
+        try
+        {
+            Cliente? cliente =
+                ClienteDAO.BuscarPorEmailCpf(email, cpf);
+
+            if (cliente == null)
+            {
+                mensagem = "Cliente não encontrado. Confira os dados.";
+                return;
+            }
+
+            SessaoUsuario.Entrar(cliente);
+
             Navigation.NavigateTo("/catalogo");
         }
-        else
+        catch (Exception ex)
         {
-            Mensagem = "Usuário ou senha inválidos.";
+            mensagem = "Erro ao entrar: " + ex.Message;
         }
     }
 
+    private void CriarConta()
+    {
+        Navigation.NavigateTo("/cadastro");
+    }
 }

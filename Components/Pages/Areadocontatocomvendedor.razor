@@ -1,14 +1,17 @@
 ﻿@page "/contato"
 
-<PageTitle>Contato com o Vendedor</PageTitle>
+@using AppFloraClick.DAO
+@using AppFloraClick.Models
+@using AppFloraClick.Services
+
+@inject ContatoVendedorDAO ContatoDAO
+@inject SessaoUsuario SessaoUsuario
+
+<PageTitle>Contato - Flora Click</PageTitle>
 
 <div class="pagina-contato">
 
     <div class="painel-contato">
-
-        <div class="ornamento">
-            
-        </div>
 
         <div class="cabecalho">
 
@@ -19,78 +22,79 @@
             <h2>Fale com um Vendedor</h2>
 
             <span>
-                Estamos prontos para ajudar você a escolher o arranjo perfeito,
-                tirar dúvidas sobre produtos ou acompanhar seus pedidos.
+                Tire dúvidas, solicite informações ou envie uma mensagem
+                para nossa equipe.
             </span>
 
         </div>
 
+        @if (!string.IsNullOrWhiteSpace(mensagem))
+        {
+            <div class="mensagem @(sucesso ? "sucesso" : "erro")">
+                @mensagem
+            </div>
+        }
+
         <div class="formulario">
 
             <div class="campo">
-                <label>Nome Completo</label>
-                <input type="text" placeholder="Digite seu nome" />
-            </div>
 
-            <div class="campo">
-                <label>E-mail</label>
-                <input type="email" placeholder="Digite seu e-mail" />
-            </div>
-
-            <div class="campo">
-                <label>Telefone</label>
-                <input type="text" placeholder="(69) 99999-9999" />
-            </div>
-
-            <div class="campo">
                 <label>Assunto</label>
 
-                <select>
+                <select @bind="contato.assunto_con">
+
+                    <option value="">Selecione</option>
+
                     <option>Dúvida sobre produto</option>
                     <option>Solicitar orçamento</option>
                     <option>Acompanhar pedido</option>
                     <option>Sugestão</option>
                     <option>Outro assunto</option>
+
                 </select>
+
             </div>
 
             <div class="campo">
+
                 <label>Mensagem</label>
 
-                <textarea placeholder="Digite sua mensagem"></textarea>
+                <textarea @bind="contato.Mensagem_con"
+                              placeholder="Digite sua mensagem">
+                </textarea>
+
+                </div>
+
+                <button class="btn-enviar"
+                        @onclick="Enviar">
+
+                    ENVIAR MENSAGEM
+
+                </button>
+
             </div>
 
-            <button class="btn-enviar">
-                Enviar Mensagem
-            </button>
+            <div class="atendimento">
 
-        </div>
+                <h3>Informações de Atendimento</h3>
 
-        <div class="atendimento">
+                <div class="cards">
 
-            <h3>Informações de Atendimento</h3>
+                    <div class="card-info">
+                        <h4>WhatsApp</h4>
+                        <p>(69) 99348-8865</p>
+                    </div>
 
-            <div class="cards">
+                    <div class="card-info">
+                        <h4>E-mail</h4>
+                        <p>contato@floraclick.com.br</p>
+                    </div>
 
-                <div class="card-info">
+                    <div class="card-info">
+                        <h4>Horário</h4>
+                        <p>Segunda a sábado<br />08h às 18h</p>
+                    </div>
 
-                    <h4>WhatsApp</h4>
-                    <p>(69) 99348-8865</p>
-                </div>
-
-                <div class="card-info">
-                    <h4>E-mail</h4>
-                    <p>contato@floraclickobixãodasflores.com.br</p>
-                </div>
-
-                <div class="card-info">
-                    <h4>Horário</h4>
-                    <p>Segunda a Sábado<br />08h às 18h</p>
-                </div>
-
-                <div class="card-info">
-                    <h4>Observações</h4>
-                    <p>Exceto domingos e feriados</p>
                 </div>
 
             </div>
@@ -99,4 +103,37 @@
 
     </div>
 
-</div>
+@code
+{
+    private ContatoVendedor contato = new();
+
+    private string mensagem = "";
+
+    private bool sucesso;
+
+    private void Enviar()
+    {
+        if (string.IsNullOrWhiteSpace(contato.assunto_con) ||
+            string.IsNullOrWhiteSpace(contato.Mensagem_con))
+        {
+            sucesso = false;
+            mensagem = "Preencha o assunto e a mensagem.";
+            return;
+        }
+
+        try
+        {
+            ContatoDAO.Inserir(contato);
+
+            sucesso = true;
+            mensagem = "Mensagem enviada com sucesso!";
+
+            contato = new ContatoVendedor();
+        }
+        catch (Exception ex)
+        {
+            sucesso = false;
+            mensagem = "Erro ao enviar mensagem: " + ex.Message;
+        }
+    }
+}

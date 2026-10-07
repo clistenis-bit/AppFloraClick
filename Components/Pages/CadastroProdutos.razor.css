@@ -97,3 +97,31 @@
         transform: translateY(-3px);
         background: #5f6944;
     }
+
+.mensagem {
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+    .mensagem.sucesso {
+        background: #547a52;
+        color: white;
+    }
+
+    .mensagem.erro {
+        background: #9b4b4b;
+        color: white;
+    }
+
+.btn-voltar {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border: 1px solid rgba(255,255,255,.4);
+    border-radius: 12px;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+}

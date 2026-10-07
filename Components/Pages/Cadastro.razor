@@ -1,6 +1,13 @@
 ﻿@page "/cadastro"
 
-<PageTitle>Cadastro de Cliente</PageTitle>
+@using AppFloraClick.DAO
+@using AppFloraClick.Models
+@using AppFloraClick.Services
+
+@inject ClienteDAO ClienteDAO
+@inject SessaoUsuario SessaoUsuario
+@inject NavigationManager Navigation
+<PageTitle>Cadastro de Cliente - Flora Click</PageTitle>
 
 <div class="pagina-cadastro">
 
@@ -13,39 +20,116 @@
             <p>CADASTRO DE CLIENTE</p>
         </div>
 
+        @if (!string.IsNullOrWhiteSpace(mensagem))
+        {
+            <div class="mensagem @(sucesso ? "sucesso" : "erro")">
+                @mensagem
+            </div>
+        }
+
         <div class="grupo">
             <label>Nome Completo</label>
-            <input type="text" placeholder="Digite seu nome completo" />
+
+            <input type="text"
+                   @bind="cliente.nome_cli"
+                   placeholder="Digite seu nome completo" />
         </div>
 
         <div class="grupo">
             <label>E-mail</label>
-            <input type="email" placeholder="Digite seu e-mail" />
+
+            <input type="email"
+                   @bind="cliente.email_cli"
+                   placeholder="Digite seu e-mail" />
         </div>
 
         <div class="grupo">
             <label>Telefone</label>
-            <input type="text" placeholder="(00) 00000-0000" />
+
+            <input type="text"
+                   @bind="cliente.telefone_cli"
+                   placeholder="(69) 99999-9999" />
         </div>
 
         <div class="linha">
 
             <div class="grupo">
                 <label>CPF</label>
-                <input type="text" placeholder="000.000.000-00" />
+
+                <input type="text"
+                       @bind="cliente.cpf_cli"
+                       placeholder="000.000.000-00" />
             </div>
 
             <div class="grupo">
                 <label>Data de Nascimento</label>
-                <input type="date" />
+
+                <input type="date"
+                       @bind="cliente.data_nas_cli" />
             </div>
 
         </div>
 
-        <button class="btn-salvar">
+        <button class="btn-salvar"
+                @onclick="Cadastrar">
+
             SALVAR CADASTRO
+        </button>
+
+        <button class="btn-secundario"
+                @onclick="IrParaLogin">
+
+            JÁ TENHO CADASTRO
         </button>
 
     </div>
 
 </div>
+
+@code {
+
+    private Cliente cliente = new Cliente
+    {
+        data_nas_cli = DateTime.Today
+    };
+
+    private string mensagem = "";
+
+    private bool sucesso = false;
+
+    private void Cadastrar()
+    {
+        mensagem = "";
+
+        if (string.IsNullOrWhiteSpace(cliente.nome_cli) ||
+            string.IsNullOrWhiteSpace(cliente.email_cli) ||
+            string.IsNullOrWhiteSpace(cliente.telefone_cli) ||
+            string.IsNullOrWhiteSpace(cliente.cpf_cli))
+        {
+            sucesso = false;
+            mensagem = "Preencha todos os campos.";
+            return;
+        }
+
+        try
+        {
+            int id = ClienteDAO.Inserir(cliente);
+
+            cliente.id_cli = id;
+
+            SessaoUsuario.Entrar(cliente);
+
+            Navigation.NavigateTo("/catalogo");
+        }
+        catch (Exception ex)
+        {
+            sucesso = false;
+            mensagem = "Não foi possível salvar o cadastro: " + ex.Message;
+        }
+    }
+
+    private void IrParaLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+}

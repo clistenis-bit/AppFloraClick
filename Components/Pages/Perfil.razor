@@ -1,0 +1,111 @@
+﻿@page "/perfil"
+
+@using AppFloraClick.Services
+
+@inject SessaoUsuario SessaoUsuario
+@inject NavigationManager Navigation
+
+<PageTitle>Meu Perfil - Flora Click</PageTitle>
+
+<div class="perfil-pagina">
+
+    <div class="perfil-card">
+
+        @if (!SessaoUsuario.EstaLogado)
+        {
+            <h1>Você não está logado</h1>
+
+            <p>
+                Faça seu cadastro ou entre na sua conta para acessar seu perfil.
+            </p>
+
+            <button @onclick="IrCadastro">
+                CRIAR CONTA
+            </button>
+
+            <button @onclick="IrLogin">
+                ENTRAR
+            </button>
+        }
+        else
+        {
+            <div class="perfil-icone">
+                👤
+            </div>
+
+            <h1>
+                Olá, @SessaoUsuario.UsuarioLogado!.nome_cli!
+            </h1>
+
+            <p class="subtitulo">
+                Seu perfil Flora Click
+            </p>
+
+            <div class="dados">
+
+                <div>
+                    <span>Nome</span>
+                    <strong>@SessaoUsuario.UsuarioLogado.nome_cli</strong>
+                </div>
+
+                <div>
+                    <span>E-mail</span>
+                    <strong>@SessaoUsuario.UsuarioLogado.email_cli</strong>
+                </div>
+
+                <div>
+                    <span>Telefone</span>
+                    <strong>@SessaoUsuario.UsuarioLogado.telefone_cli</strong>
+                </div>
+
+                <div>
+                    <span>CPF</span>
+                    <strong>@SessaoUsuario.UsuarioLogado.cpf_cli</strong>
+                </div>
+
+                <div>
+                    <span>Data de nascimento</span>
+                    <strong>
+                        @SessaoUsuario.UsuarioLogado.data_nas_cli.ToString("dd/MM/yyyy")
+                    </strong>
+                </div>
+
+            </div>
+
+            <button @onclick="VoltarCatalogo">
+                VOLTAR AO CATÁLOGO
+            </button>
+
+            <button class="sair"
+                    @onclick="Sair">
+                SAIR DA CONTA
+            </button>
+        }
+
+    </div>
+
+</div>
+
+@code
+{
+    private void IrCadastro()
+    {
+        Navigation.NavigateTo("/cadastro");
+    }
+
+    private void IrLogin()
+    {
+        Navigation.NavigateTo("/login");
+    }
+
+    private void VoltarCatalogo()
+    {
+        Navigation.NavigateTo("/catalogo");
+    }
+
+    private void Sair()
+    {
+        SessaoUsuario.Sair();
+        Navigation.NavigateTo("/");
+    }
+}

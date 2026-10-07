@@ -6,7 +6,13 @@ namespace AppFloraClick.Configs
     {
         public static MySqlConnection Conectar()
         {
-            string conexao = "Server=localhost;Port=3306;Database=floraclick_bd;User=root;Password=;";
+            string conexao =
+                "Server=localhost;" +
+                "Port=3306;" +
+                "Database=floraclick_bd;" +
+                "Uid=root;" +
+                "Pwd=;" +
+                "SslMode=None;";
 
             return new MySqlConnection(conexao);
         }

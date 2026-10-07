@@ -1,0 +1,76 @@
+﻿@page "/teste-banco"
+@rendermode InteractiveServer
+
+@using AppFloraClick.Configs
+@using MySql.Data.MySqlClient
+
+@inject NavigationManager Navigation
+
+<PageTitle>Teste do Banco</PageTitle>
+
+<div style="padding:40px; font-family:Arial;">
+
+    <h1>Teste do Banco Flora Click</h1>
+
+    <button @onclick="TestarBanco"
+            style="padding:15px 25px; cursor:pointer;">
+        TESTAR CONEXÃO
+    </button>
+
+    @if (!string.IsNullOrWhiteSpace(resultado))
+    {
+        <div style="
+            margin-top:20px;
+            padding:20px;
+            border-radius:10px;
+            background:#eee;
+            color:#111;
+            white-space:pre-wrap;">
+
+            @resultado
+
+        </div>
+    }
+
+    <br />
+
+    <button @onclick="Voltar">
+        Voltar
+    </button>
+
+</div>
+
+@code {
+
+    private string resultado = "";
+
+    private void TestarBanco()
+    {
+        try
+        {
+            using (MySqlConnection conexao = Conexao.Conectar())
+            {
+                conexao.Open();
+
+                resultado =
+                    "✅ CONEXÃO FUNCIONOU!\n\n" +
+                    "Banco: floraclick_bd\n" +
+                    "Servidor: localhost\n" +
+                    "Porta: 3306";
+            }
+        }
+        catch (Exception ex)
+        {
+            resultado =
+                "❌ ERRO AO CONECTAR AO MYSQL\n\n" +
+                ex.GetType().Name +
+                "\n\n" +
+                ex.Message;
+        }
+    }
+
+    private void Voltar()
+    {
+        Navigation.NavigateTo("/cadastro");
+    }
+}

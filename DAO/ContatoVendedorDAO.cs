@@ -14,48 +14,62 @@ namespace AppFloraClick.DAO
             {
                 conexao.Open();
 
-                string sql = "INSERT INTO Contato_vendedor (nome_vend_con, telefone_vend_con, email_vend_con, mensagem_con) VALUES (@nome, @telefone, @email, @mensagem)";
+                string sql = @"
+                    INSERT INTO Contato_vendedor
+                    (
+                        assunto_con,
+                        Mensagem_con
+                    )
+                    VALUES
+                    (
+                        @assunto,
+                        @mensagem
+                    )
+                ";
 
-                MySqlCommand comando = new MySqlCommand(sql, conexao);
+                using (MySqlCommand comando = new MySqlCommand(sql, conexao))
+                {
+                    comando.Parameters.AddWithValue("@assunto", contato.assunto_con);
+                    comando.Parameters.AddWithValue("@mensagem", contato.Mensagem_con);
 
-                comando.Parameters.AddWithValue("@nome", contato.nome_vend_con);
-                comando.Parameters.AddWithValue("@telefone", contato.telefone_vend_con);
-                comando.Parameters.AddWithValue("@email", contato.email_vend_con);
-                comando.Parameters.AddWithValue("@mensagem", contato.mensagem_con);
-
-                comando.ExecuteNonQuery();
+                    comando.ExecuteNonQuery();
+                }
             }
         }
 
         public List<ContatoVendedor> Listar()
         {
-            List<ContatoVendedor> contatos = new List<ContatoVendedor>();
+            List<ContatoVendedor> lista = new List<ContatoVendedor>();
 
             using (MySqlConnection conexao = Conexao.Conectar())
             {
                 conexao.Open();
 
-                string sql = "SELECT * FROM Contato_vendedor";
+                string sql = @"
+                    SELECT
+                        id_con,
+                        assunto_con,
+                        Mensagem_con
+                    FROM Contato_vendedor
+                    ORDER BY id_con DESC
+                ";
 
-                MySqlCommand comando = new MySqlCommand(sql, conexao);
-
-                MySqlDataReader leitor = comando.ExecuteReader();
-
-                while (leitor.Read())
+                using (MySqlCommand comando = new MySqlCommand(sql, conexao))
+                using (MySqlDataReader leitor = comando.ExecuteReader())
                 {
-                    ContatoVendedor contato = new ContatoVendedor();
-
-                    contato.id_con = Convert.ToInt32(leitor["id_con"]);
-                    contato.nome_vend_con = leitor["nome_vend_con"].ToString() ?? "";
-                    contato.telefone_vend_con = leitor["telefone_vend_con"].ToString() ?? "";
-                    contato.email_vend_con = leitor["email_vend_con"].ToString() ?? "";
-                    contato.mensagem_con = leitor["mensagem_con"].ToString() ?? "";
-
-                    contatos.Add(contato);
+                    while (leitor.Read())
+                    {
+                        lista.Add(new ContatoVendedor
+                        {
+                            id_con = Convert.ToInt32(leitor["id_con"]),
+                            assunto_con = leitor["assunto_con"]?.ToString() ?? "",
+                            Mensagem_con = leitor["Mensagem_con"]?.ToString() ?? ""
+                        });
+                    }
                 }
             }
 
-            return contatos;
+            return lista;
         }
 
         public void Excluir(int id)
@@ -64,13 +78,14 @@ namespace AppFloraClick.DAO
             {
                 conexao.Open();
 
-                string sql = "DELETE FROM Contato_vendedor WHERE id_con = @id";
+                string sql =
+                    "DELETE FROM Contato_vendedor WHERE id_con = @id";
 
-                MySqlCommand comando = new MySqlCommand(sql, conexao);
-
-                comando.Parameters.AddWithValue("@id", id);
-
-                comando.ExecuteNonQuery();
+                using (MySqlCommand comando = new MySqlCommand(sql, conexao))
+                {
+                    comando.Parameters.AddWithValue("@id", id);
+                    comando.ExecuteNonQuery();
+                }
             }
         }
     }

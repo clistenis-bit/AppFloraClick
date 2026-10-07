@@ -1,6 +1,12 @@
-﻿@page "/cadastro-produto"
+﻿@page "/cadastroproduto"
 
-<PageTitle>Cadastro de Produto</PageTitle>
+@using AppFloraClick.DAO
+@using AppFloraClick.Models
+
+@inject ProdutoDAO ProdutoDAO
+@inject NavigationManager Navigation
+
+<PageTitle>Cadastro de Produto - Flora Click</PageTitle>
 
 <div class="pagina-produto">
 
@@ -8,67 +14,124 @@
 
     <div class="card-produto">
 
-        <div class="titulo-produto">
+        <div class="titulo">
             <h1>Flora Click</h1>
-            <p>CADASTRO DE PRODUTOS</p>
+            <p>CADASTRO DE PRODUTO</p>
         </div>
+
+        @if (!string.IsNullOrWhiteSpace(mensagem))
+        {
+            <div class="mensagem @(sucesso ? "sucesso" : "erro")">
+                @mensagem
+            </div>
+        }
 
         <div class="grupo">
             <label>Nome do Produto</label>
-            <input type="text" placeholder="Ex: Buquê de Rosas Vermelhas" />
+
+            <input type="text"
+                   @bind="produto.nome_pro"
+                   placeholder="Digite o nome do produto" />
+        </div>
+
+        <div class="grupo">
+            <label>Categoria</label>
+
+            <select @bind="produto.categoria_pro">
+
+                <option value="">Selecione</option>
+                <option value="Buquê">Buquê</option>
+                <option value="Arranjo Floral">Arranjo Floral</option>
+                <option value="Planta">Planta</option>
+                <option value="Vaso">Vaso</option>
+                <option value="Cesta de Presentes">Cesta de Presentes</option>
+
+            </select>
         </div>
 
         <div class="grupo">
             <label>Descrição</label>
-            <textarea placeholder="Descreva o produto"></textarea>
-        </div>
 
-        <div class="linha">
+            <textarea @bind="produto.descricao_pro"
+                          placeholder="Descrição do produto">
+            </textarea>
+            </div>
 
-            <div class="grupo">
-                <label>Categoria</label>
+            <div class="linha">
 
-                <select>
-                    <option>Buquê</option>
-                    <option>Arranjo</option>
-                    <option>Flor</option>
-                    <option>Vaso</option>
-                    <option>Cesta de Presentes</option>
-                    <option>Planta</option>
-                </select>
+                <div class="grupo">
+                    <label>Preço (R$)</label>
+
+                    <input type="number"
+                           step="0.01"
+                           @bind="produto.preco_pro" />
+                </div>
+
+                <div class="grupo">
+                    <label>Quantidade</label>
+
+                    <input type="number"
+                           @bind="produto.quantidade_pro" />
+                </div>
 
             </div>
 
-            <div class="grupo">
-                <label>Preço (R$)</label>
-                <input type="number" step="0.01" placeholder="0,00" />
-            </div>
+            <button class="btn-cadastrar"
+                    @onclick="Cadastrar">
+
+                CADASTRAR PRODUTO
+            </button>
+
+            <button class="btn-voltar"
+                    @onclick="VoltarCatalogo">
+
+                VOLTAR AO CATÁLOGO
+            </button>
 
         </div>
-
-        <div class="linha">
-
-            <div class="grupo">
-                <label>Quantidade em Estoque</label>
-                <input type="number" placeholder="0" />
-            </div>
-
-            <div class="grupo">
-                <label>Cor predominante</label>
-                <input type="text" placeholder="Ex: Vermelho" />
-            </div>
-
-        </div>
-
-        <div class="grupo">
-            <label>Imagem do Produto</label>
-            <input type="file" />
-        </div>
-
-        <button class="btn-salvar">
-            CADASTRAR PRODUTO
-        </button>
 
     </div>
 
-</div>
+@code {
+
+    private Produto produto = new Produto();
+
+    private string mensagem = "";
+
+    private bool sucesso = false;
+
+    private void Cadastrar()
+    {
+        mensagem = "";
+
+        if (string.IsNullOrWhiteSpace(produto.nome_pro) ||
+            string.IsNullOrWhiteSpace(produto.categoria_pro) ||
+            produto.preco_pro <= 0 ||
+            produto.quantidade_pro < 0)
+        {
+            sucesso = false;
+            mensagem = "Preencha os dados do produto corretamente.";
+            return;
+        }
+
+        try
+        {
+            ProdutoDAO.Inserir(produto);
+
+            sucesso = true;
+            mensagem = "Produto cadastrado com sucesso!";
+
+            produto = new Produto();
+        }
+        catch (Exception ex)
+        {
+            sucesso = false;
+            mensagem = "Erro ao cadastrar produto: " + ex.Message;
+        }
+    }
+
+    private void VoltarCatalogo()
+    {
+        Navigation.NavigateTo("/catalogo");
+    }
+}

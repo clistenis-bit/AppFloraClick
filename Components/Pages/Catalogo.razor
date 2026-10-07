@@ -1,122 +1,154 @@
 ﻿@page "/catalogo"
 
+@using AppFloraClick.DAO
+@using AppFloraClick.Models
+@using AppFloraClick.Services
+
+@inject ProdutoDAO ProdutoDAO
+@inject SessaoUsuario SessaoUsuario
+@inject NavigationManager Navigation
+
+<PageTitle>Catálogo - Flora Click</PageTitle>
+
 <section class="pagina-buques">
 
     <header class="topo">
 
-        <img src="imagens/Anjosemfundo.png" class="anjo esquerda" alt="Anjo">
+        <img src="imagens/Anjosemfundo.png"
+             class="anjo esquerda"
+             alt="Flora Click">
 
         <div class="titulo">
-            <h1>Buquês</h1>
-            <p>PORQUE TER FLORES É MUITO BOM</p>
-            <span>PROJETO DE PDS</span>
+
+            <h1>Flora Click</h1>
+
+            <p>
+                PORQUE TER FLORES É MUITO BOM
+            </p>
+
+            @if (SessaoUsuario.EstaLogado)
+            {
+                <span>
+                    Olá, @SessaoUsuario.UsuarioLogado!.nome_cli 🌷
+                </span>
+            }
+
         </div>
 
-        <img src="imagens/Anjo2semfundo.png" class="anjo direita" alt="Anjo2">
+        <img src="imagens/Anjo2semfundo.png"
+             class="anjo direita"
+             alt="Flora Click">
 
     </header>
 
-    <div class="produtos">
+    <nav class="acoes-catalogo">
 
-        <div class="card">
-            <img src="imagens/laco.png" class="laco" alt="Laço">
+        <button @onclick="Perfil">
+            👤 Meu Perfil
+        </button>
 
-            <div class="imagem">
-                <img src="imagens/buquerosavermelha.png" alt="Buquê de rosas">
-            </div>
+        <button @onclick="Agendamento">
+            📅 Datas Especiais
+        </button>
 
-            <h2>Buquê de Rosas</h2>
-            <p>R$ 200,00</p>
+        <button @onclick="Contato">
+            💬 Contato
+        </button>
+
+        <button @onclick="CadastroProduto">
+            🌸 Cadastrar Produto
+        </button>
+
+    </nav>
+
+    @if (produtos.Count == 0)
+    {
+        <div class="sem-produtos">
+
+            <h2>Nenhum produto cadastrado ainda.</h2>
+
+            <p>
+                Cadastre seu primeiro produto para ele aparecer no catálogo.
+            </p>
+
+            <button @onclick="CadastroProduto">
+                CADASTRAR PRODUTO
+            </button>
+
         </div>
+    }
+    else
+    {
+        <div class="produtos">
 
-        <div class="card">
-            <img src="imagens/laco.png" class="laco" alt="Laço">
+            @foreach (var produto in produtos)
+            {
+                <div class="card">
 
-            <div class="imagem">
-                <img src="imagens/Buquerosarosa.png" alt="Buquê rosa">
-            </div>
+                    <img src="imagens/laco.png"
+                         class="laco"
+                         alt="Flora Click">
 
-            <h2>Buquê de Rosas Cor de Rosa</h2>
-            <p>R$ 290,00</p>
+                    <div class="imagem">
+
+                        <img src="imagens/Buquerosarosa.png"
+                             alt="@produto.nome_pro">
+
+                    </div>
+
+                    <h2>@produto.nome_pro</h2>
+
+                    <p>
+                        R$ @produto.preco_pro.ToString("N2")
+                    </p>
+
+                    <small>
+                        @produto.categoria_pro
+                    </small>
+
+                    <span>
+                        @produto.descricao_pro
+                    </span>
+
+                </div>
+            }
+
         </div>
-
-        <div class="card">
-            <img src="imagens/laco.png" class="laco" alt="Laço">
-
-            <div class="imagem">
-                <img src="imagens/buquetulipa.png" alt="Tulipas">
-            </div>
-
-            <h2>Buquê de Tulipas</h2>
-            <p>R$ 290,55</p>
-        </div>
-
-        <div class="card">
-            <img src="imagens/laco.png" class="laco" alt="Laço">
-
-            <div class="imagem">
-                <img src="imagens/girassol.png" alt="Girassol">
-            </div>
-
-            <h2>Buquê de Girassóis</h2>
-            <p>R$ 50,00</p>
-        </div>
-
-        <div class="card">
-            <img src="imagens/laco.png" class="laco" alt="Laço">
-
-            <div class="imagem">
-                <img src="imagens/primaveril.png" alt="Primaveril">
-            </div>
-
-            <h2>Buquê Primaveril</h2>
-            <p>R$ 50,00</p>
-        </div>
-
-        <div class="card">
-            <img src="imagens/laco.png" class="laco" alt="Laço">
-
-            <div class="imagem">
-                <img src="imagens/lirio.png" alt="Lírio">
-            </div>
-
-            <h2>Buquê de Lírio</h2>
-            <p>R$ 50,00</p>
-        </div>
-
-        <div class="card">
-            <img src="imagens/laco.png" class="laco" alt="Laço">
-
-            <div class="imagem">
-                <img src="imagens/peonia.png" alt="Peônia">
-            </div>
-
-            <h2>Buquê de Peônias</h2>
-            <p>R$ 3500,00</p>
-        </div>
-
-        <div class="card">
-            <img src="imagens/laco.png" class="laco" alt="Laço">
-
-            <div class="imagem">
-                <img src="imagens/vermelhas.png" alt="Flores Vermelhas">
-            </div>
-
-            <h2>Buquê de Flores Vermelhas</h2>
-            <p>R$ 100,00</p>
-        </div>
-
-        <div class="card">
-            <img src="imagens/laco.png" class="laco" alt="Laço">
-
-            <div class="imagem">
-                <img src="imagens/gerbera.png" alt="Gérberas">
-            </div>
-
-            <h2>Buquê de Gérberas</h2>
-            <p>R$ 100,00</p>
-        </div>
-
-    </div>
+    }
 
 </section>
+
+@code
+{
+    private List<Produto> produtos = new();
+
+    protected override void OnInitialized()
+    {
+        CarregarProdutos();
+    }
+
+    private void CarregarProdutos()
+    {
+        produtos = ProdutoDAO.Listar();
+    }
+
+    private void Perfil()
+    {
+        Navigation.NavigateTo("/perfil");
+    }
+
+    private void Agendamento()
+    {
+        Navigation.NavigateTo("/agendamento-data");
+    }
+
+    private void Contato()
+    {
+        Navigation.NavigateTo("/contato");
+    }
+
+    private void CadastroProduto()
+    {
+        Navigation.NavigateTo("/cadastroproduto");
+    }
+}
