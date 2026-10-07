@@ -30,16 +30,34 @@ namespace AppFloraClick.DAO
                         @tipo,
                         @data,
                         @observacao
-                    )
-                ";
+                    )";
 
                 using (MySqlCommand comando = new MySqlCommand(sql, conexao))
                 {
-                    comando.Parameters.AddWithValue("@nome", agendamento.nome_cli_age);
-                    comando.Parameters.AddWithValue("@telefone", agendamento.telefone_age);
-                    comando.Parameters.AddWithValue("@tipo", agendamento.tipo_data_age);
-                    comando.Parameters.AddWithValue("@data", agendamento.data_age);
-                    comando.Parameters.AddWithValue("@observacao", agendamento.observacao_age);
+                    comando.Parameters.AddWithValue(
+                        "@nome",
+                        agendamento.nome_cli_age
+                    );
+
+                    comando.Parameters.AddWithValue(
+                        "@telefone",
+                        agendamento.telefone_age
+                    );
+
+                    comando.Parameters.AddWithValue(
+                        "@tipo",
+                        agendamento.tipo_data_age
+                    );
+
+                    comando.Parameters.AddWithValue(
+                        "@data",
+                        agendamento.data_age
+                    );
+
+                    comando.Parameters.AddWithValue(
+                        "@observacao",
+                        agendamento.observacao_age
+                    );
 
                     comando.ExecuteNonQuery();
                 }
@@ -48,7 +66,7 @@ namespace AppFloraClick.DAO
 
         public List<AgendamentoData> Listar()
         {
-            List<AgendamentoData> lista = new List<AgendamentoData>();
+            List<AgendamentoData> lista = new();
 
             using (MySqlConnection conexao = Conexao.Conectar())
             {
@@ -63,15 +81,14 @@ namespace AppFloraClick.DAO
                         data_age,
                         observacao_age
                     FROM Agendamento_data
-                    ORDER BY id_age DESC
-                ";
+                    ORDER BY id_age DESC";
 
                 using (MySqlCommand comando = new MySqlCommand(sql, conexao))
                 using (MySqlDataReader leitor = comando.ExecuteReader())
                 {
                     while (leitor.Read())
                     {
-                        AgendamentoData agendamento = new AgendamentoData
+                        AgendamentoData agendamento = new()
                         {
                             id_age = Convert.ToInt32(leitor["id_age"]),
                             nome_cli_age = leitor["nome_cli_age"]?.ToString() ?? "",
@@ -106,6 +123,7 @@ namespace AppFloraClick.DAO
                 using (MySqlCommand comando = new MySqlCommand(sql, conexao))
                 {
                     comando.Parameters.AddWithValue("@id", id);
+
                     comando.ExecuteNonQuery();
                 }
             }

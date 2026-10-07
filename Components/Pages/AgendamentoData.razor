@@ -6,7 +6,7 @@
 @inject AgendamentoDataDAO AgendamentoDAO
 @inject NavigationManager Navigation
 
-<PageTitle>Datas Especiais - Flora Click</PageTitle>
+<PageTitle>Agendamento de Datas Especiais</PageTitle>
 
 <div class="pagina-agendamento">
 
@@ -37,14 +37,16 @@
             <div class="campo">
                 <label>Nome do Cliente</label>
 
-                <input @bind="novo.nome_cli_age"
+                <input type="text"
+                       @bind="novo.nome_cli_age"
                        placeholder="Digite o nome" />
             </div>
 
             <div class="campo">
                 <label>Telefone</label>
 
-                <input @bind="novo.telefone_age"
+                <input type="text"
+                       @bind="novo.telefone_age"
                        placeholder="(69) 99999-9999" />
             </div>
 
@@ -52,12 +54,29 @@
                 <label>Tipo da Data</label>
 
                 <select @bind="novo.tipo_data_age">
+
                     <option value="">Selecione</option>
-                    <option>Aniversário</option>
-                    <option>Dia das Mães</option>
-                    <option>Dia dos Namorados</option>
-                    <option>Dia dos Pais</option>
-                    <option>Data Personalizada</option>
+
+                    <option value="Aniversário">
+                        Aniversário
+                    </option>
+
+                    <option value="Dia das Mães">
+                        Dia das Mães
+                    </option>
+
+                    <option value="Dia dos Namorados">
+                        Dia dos Namorados
+                    </option>
+
+                    <option value="Dia dos Pais">
+                        Dia dos Pais
+                    </option>
+
+                    <option value="Data Personalizada">
+                        Data Personalizada
+                    </option>
+
                 </select>
             </div>
 
@@ -80,10 +99,12 @@
 
             <div class="botoes">
 
-                <button class="btn-cadastrar"
+                <button type="button"
+                        class="btn-cadastrar"
                         @onclick="Cadastrar">
 
                     CADASTRAR DATA
+
                 </button>
 
             </div>
@@ -118,21 +139,32 @@
                         {
                             <tr>
 
-                                <td>@item.nome_cli_age</td>
+                                <td>
+                                    @item.nome_cli_age
+                                </td>
 
-                                <td>@item.telefone_age</td>
+                                <td>
+                                    @item.telefone_age
+                                </td>
 
-                                <td>@item.tipo_data_age</td>
+                                <td>
+                                    @item.tipo_data_age
+                                </td>
 
                                 <td>
                                     @item.data_age.ToString("dd/MM/yyyy")
                                 </td>
 
                                 <td>
-                                    <button class="btn-excluir"
+
+                                    <button type="button"
+                                            class="btn-excluir"
                                             @onclick="() => Excluir(item.id_age)">
+
                                         Excluir
+
                                     </button>
+
                                 </td>
 
                             </tr>
@@ -143,39 +175,59 @@
                 </table>
             }
 
-            <button class="btn-voltar"
+            <button type="button"
+                    class="btn-voltar"
                     @onclick="Voltar">
 
                 VOLTAR AO CATÁLOGO
+
             </button>
 
         </div>
 
     </div>
 
-@code
-{
-    private AgendamentoData novo = new();
+
+@code {
+
+    private AgendamentoData novo = new()
+    {
+        data_age = DateTime.Today
+    };
 
     private List<AgendamentoData> agendamentos = new();
 
     private string mensagem = "";
 
-    private bool sucesso;
+    private bool sucesso = false;
+
 
     protected override void OnInitialized()
     {
         CarregarAgendamentos();
     }
 
+
     private void Cadastrar()
     {
-        if (string.IsNullOrWhiteSpace(novo.nome_cli_age) ||
-            string.IsNullOrWhiteSpace(novo.telefone_age) ||
-            string.IsNullOrWhiteSpace(novo.tipo_data_age))
+        if (string.IsNullOrWhiteSpace(novo.nome_cli_age))
         {
             sucesso = false;
-            mensagem = "Preencha nome, telefone e tipo da data.";
+            mensagem = "Digite o nome do cliente.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(novo.telefone_age))
+        {
+            sucesso = false;
+            mensagem = "Digite o telefone.";
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(novo.tipo_data_age))
+        {
+            sucesso = false;
+            mensagem = "Selecione o tipo da data.";
             return;
         }
 
@@ -200,6 +252,7 @@
         }
     }
 
+
     private void CarregarAgendamentos()
     {
         try
@@ -208,15 +261,21 @@
         }
         catch (Exception ex)
         {
+            sucesso = false;
             mensagem = "Erro ao carregar datas: " + ex.Message;
         }
     }
+
 
     private void Excluir(int id)
     {
         try
         {
             AgendamentoDAO.Excluir(id);
+
+            sucesso = true;
+            mensagem = "Data excluída com sucesso!";
+
             CarregarAgendamentos();
         }
         catch (Exception ex)
@@ -226,8 +285,10 @@
         }
     }
 
+
     private void Voltar()
     {
         Navigation.NavigateTo("/catalogo");
     }
+
 }

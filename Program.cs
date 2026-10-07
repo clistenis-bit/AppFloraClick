@@ -11,7 +11,6 @@ builder.Services.AddScoped<ClienteDAO>();
 builder.Services.AddScoped<ProdutoDAO>();
 builder.Services.AddScoped<AgendamentoDataDAO>();
 builder.Services.AddScoped<ContatoVendedorDAO>();
-
 builder.Services.AddScoped<SessaoUsuario>();
 
 var app = builder.Build();
